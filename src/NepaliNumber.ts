@@ -33,14 +33,18 @@ class NepaliNumber {
             return ""
         }
 
-        return numberString.toString().split("").map((char: string): string => {
-            // tslint:disable-next-line:radix
-            if (isNaN(parseInt(char))) {
-                return char
-            }
+        return numberString
+            .toString()
+            .split("")
+            .map((char: string): string => {
+                // tslint:disable-next-line:radix
+                if (isNaN(parseInt(char))) {
+                    return char
+                }
 
-            return this.digitMapping[char] || char
-        }).join("")
+                return this.digitMapping[char] || char
+            })
+            .join("")
     }
 
     public toEnglish(numberString?: string): string {
@@ -49,11 +53,15 @@ class NepaliNumber {
             return ""
         }
 
-        return numberString.toString().split("").map((char: string): string => {
-            const englishDigit = this.digitMapping.findIndex((digit): boolean => digit === char)
+        return numberString
+            .toString()
+            .split("")
+            .map((char: string): string => {
+                const englishDigit = this.digitMapping.findIndex((digit): boolean => digit === char)
 
-            return englishDigit === -1 ? char : `${englishDigit}`
-        }).join("")
+                return englishDigit === -1 ? char : `${englishDigit}`
+            })
+            .join("")
     }
 
     public formatNumber(type: string): string {
@@ -67,7 +75,7 @@ class NepaliNumber {
             return this.numberString
         }
 
-        const formatted = (new Intl.NumberFormat(type)).format(englishNumber)
+        const formatted = new Intl.NumberFormat(type).format(englishNumber)
 
         return this.outputLocale === "en" ? this.toEnglish(formatted) : this.toNepali(formatted)
     }
@@ -83,10 +91,10 @@ class NepaliNumber {
             return this.numberString
         }
 
-        const formatted = (new Intl.NumberFormat(type, {
+        const formatted = new Intl.NumberFormat(type, {
             maximumFractionDigits: precision,
             minimumFractionDigits: precision,
-        })).format(englishAmount)
+        }).format(englishAmount)
 
         return this.outputLocale === "en" ? this.toEnglish(formatted) : this.toNepali(formatted)
     }
