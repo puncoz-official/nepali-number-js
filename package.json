@@ -1,0 +1,57 @@
+{
+  "name": "nepali-number",
+  "version": "1.0.0",
+  "description": "Nepali numbers",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "jsnext:main": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "jest --config jestconfig.json",
+    "build": "rollup -c",
+    "build-example": "cd ./examples && yarn && yarn build",
+    "watch": "rollup -c --watch",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\"",
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "yarn build",
+    "prepublishOnly": "yarn test && yarn lint",
+    "preversion": "yarn lint",
+    "version": "yarn format && git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:puncoz-official/nepali-number.git"
+  },
+  "keywords": [
+    "nepali",
+    "english",
+    "number",
+    "digit",
+    "conversion"
+  ],
+  "author": "Puncoz Nepal <info@puncoz.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/puncoz-official/nepali-number/issues"
+  },
+  "homepage": "https://puncoz-official.github.io/nepali-number",
+  "devDependencies": {
+    "@types/jest": "^24.0.17",
+    "jest": "^24.9.0",
+    "prettier": "^1.18.2",
+    "rollup": "^1.19.4",
+    "rollup-plugin-commonjs": "^10.0.2",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-peer-deps-external": "^2.2.0",
+    "rollup-plugin-typescript2": "^0.22.1",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.18.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.5.3"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "dependencies": {}
+}
