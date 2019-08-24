@@ -1,6 +1,6 @@
 # Nepali Number
 
-Operation with numbers in nepali (Devnagari) and english with unicode supports.
+Translations and formatting numbers in nepali (Devnagari) and english with unicode supports.
 
 [![Version](https://img.shields.io/npm/v/nepali-number?logo=npm)](https://www.npmjs.com/package/nepali-number)
 [![Twitter Follow](https://img.shields.io/twitter/follow/PuncozNepal?label=Follow&style=social)](https://twitter.com/PuncozNepal)
