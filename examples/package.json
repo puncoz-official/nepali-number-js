@@ -1,7 +1,7 @@
 {
-  "name": "nepali-number-docs",
+  "name": "nepali-number-example",
   "version": "1.0.0",
-  "description": "Documentation for nepali-number",
+  "description": "Example for nepali-number",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,7 +11,7 @@
   "author": "Puncoz Nepal <info@puncoz.com>",
   "license": "MIT",
   "dependencies": {
-    "nepali-number": "file:./../",
+    "nepali-number": "file:./../"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
