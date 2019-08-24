@@ -1,6 +1,6 @@
 {
   "name": "nepali-number",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Conversion and transliteration of English to Nepali numbers and vice versa",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
