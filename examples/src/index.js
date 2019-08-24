@@ -78,5 +78,3 @@ console.log(englishAmountFormat("{}"))
 console.log(englishAmountFormat("२०७५-०२-१५"))
 console.log(englishAmountFormat("23.233"))
 console.log("\n\n")
-
-console.log(englishAmountFormat("१२३४५६७८९.०१५४", 3, "ne"))

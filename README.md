@@ -7,18 +7,21 @@ Operation with numbers in nepali (Devnagari) and english with unicode supports.
 
 ## Installation
 
+Using NPM:
 ```
 npm i nepali-number
+```
 
-or,
+or, using Yarn:
 
+```
 yarn add nepali-number
 ```
 
 ## Usage
 
 ### Import package
-This package supports both ES6 `import` as well as commonJS `require`
+Using ES6 `import`:
 ```
 import {
     englishToNepaliNumber,
@@ -32,7 +35,7 @@ import {
 } from "nepali-number"
 ```
 
-or,
+or, using commonJS `require`
 
 ```
 const nepaliNumber = require('nepali-number')
@@ -44,7 +47,7 @@ nepaliNumber.englishToNepaliNumber("8848m")
 Syntax: `englishToNepaliNumber(numberString: string | number)`
 
 ```
-englishToNepaliNumber(12,34,56,789.01) // "१२,३४,५६,७८९.०१"
+englishToNepaliNumber("12,34,56,789.01") // "१२,३४,५६,७८९.०१"
 ```
 
 #### 2. Nepali (Devnagari) unicode to english
