@@ -26,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:puncoz-official/nepali-number.git"
+    "url": "git+ssh://git@github.com:puncoz-official/nepali-number-js.git"
   },
   "keywords": [
     "nepali",
@@ -38,9 +38,9 @@
   "author": "Puncoz Nepal <info@puncoz.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/puncoz-official/nepali-number/issues"
+    "url": "https://github.com/puncoz-official/nepali-number-js/issues"
   },
-  "homepage": "https://github.com/puncoz-official/nepali-number",
+  "homepage": "https://github.com/puncoz-official/nepali-number-js",
   "devDependencies": {
     "@types/jest": "^24.0.17",
     "full-icu": "^1.3.0",
