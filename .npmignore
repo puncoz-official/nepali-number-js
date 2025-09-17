@@ -1,8 +1,0 @@
-.idea
-examples
-src
-.prettierrc
-jestconfig.json
-rollup.config.js
-tsconfig.json
-tslint.json
