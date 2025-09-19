@@ -19,7 +19,8 @@
   },
   "scripts": {
     "build": "tsdown --clean --dts",
-    "dev": "tsdown --watch"
+    "dev": "tsdown --watch",
+    "test": "bun test"
   },
   "type": "module",
   "main": "./dist/index.cjs",
