@@ -1,0 +1,113 @@
+import { NEPALI_DIGITS } from "@/constants.ts"
+import { toEnglish, toNepali } from "@/conversion"
+import type { FormatOptions } from "@/types"
+
+/**
+ * Format number with Nepali digits and locale-specific formatting
+ *
+ * @param number {number | string} - The number to format
+ * @param options {FormatOptions} - Formating Options
+ *
+ * @returns {string} - The formatted number
+ */
+export const formatNepaliNumber = (number: number | string, options: FormatOptions = {}): string => {
+  const {
+    useNepaliDigits = true,
+    addCommas = true,
+    precision = 2,
+    showZero = true,
+  } = options
+
+  const num = typeof number === "string" ? parseFloat(toEnglish(number)) : number
+
+  if (isNaN(num) || num === 0) {
+    return showZero ? (useNepaliDigits ? NEPALI_DIGITS[0] ?? "0" : "0") : ""
+  }
+
+  let formatted = num.toFixed(precision)
+
+  // remove trailing zeros for cleaner display
+  if (precision > 0) {
+    formatted = formatted.replace(/\.?0+$/, "")
+  }
+
+  if (addCommas) {
+    formatted = addNepaliCommas(formatted)
+  }
+
+  return useNepaliDigits ? toNepali(formatted) : formatted
+}
+
+/**
+ * Add commas in Nepali (Indian) number format (lakh/crore system)
+ *
+ * @param number {string | number} - The number to format
+ *
+ * @returns {string} - The formatted number
+ */
+export const addNepaliCommas = (number: string | number): string => {
+  const parts = number.toString().split(".")
+  let integerPart = parts[0] ?? ""
+  const decimalPart = parts[1]
+
+  const minusSign = integerPart.indexOf("-") > -1
+  if (minusSign) {
+    integerPart = integerPart.slice(1)
+  }
+
+  // apply indian numbering system (lakh/crore)
+  if (integerPart.length > 3) {
+    const lastThree = integerPart.slice(-3)
+    const remaining = integerPart.slice(0, -3)
+
+    integerPart = remaining.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + "," + lastThree
+  }
+
+  if (minusSign) {
+    integerPart = "-" + integerPart
+  }
+
+  return decimalPart ? `${integerPart}.${decimalPart}` : integerPart
+}
+
+/**
+ * Remove formatting and non-digits to get raw number
+ *
+ * @param formattedString {string | number}
+ *
+ * @returns {number} - The raw number
+ */
+export const removeFormatting = (formattedString: string | number): number => {
+  return Number(toEnglish(formattedString).replace(/[,\s]/g, "").replace(/[^\d.-]/g, ""))
+}
+
+/**
+ * Pad with Nepali zeros
+ *
+ * @param number {number | string} - The number to pad
+ * @param length {number} - Length for zero pad
+ *
+ * @returns {string} - The padded number
+ */
+export const padZeros = (number: number | string, length: number): string => {
+  const str = number.toString()
+  const zeros = (NEPALI_DIGITS[0] ?? "0").repeat(Math.max(0, length - str.length))
+
+  return zeros + toNepali(str)
+}
+
+/**
+ * Round and format with Nepali digits
+ *
+ * @param number {string | number} - The number to round and format
+ * @param decimals {number} - Precision for rounding off
+ *
+ * @returns {string} - The rounded number
+ */
+export const roundNepali = (number: number | string, decimals: number = 2): string => {
+  const factor = Math.pow(10, decimals)
+  const rawNumber = removeFormatting(number)
+  const rounded = Math.round(rawNumber * factor) / factor
+
+  return toNepali(rounded.toFixed(decimals))
+}
