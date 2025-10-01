@@ -23,22 +23,22 @@
     "test": "bun test"
   },
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "browser": "./dist/index.umd.js",
-  "unpkg": "./dist/index.iife.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/nepali-number.cjs",
+  "module": "./dist/nepali-number.js",
+  "browser": "./dist/nepali-number.umd.js",
+  "unpkg": "./dist/nepali-number.iife.js",
+  "types": "./dist/nepali-number.d.ts",
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
+        "types": "./dist/nepali-number.d.ts",
+        "default": "./dist/nepali-number.js"
       },
       "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
+        "types": "./dist/nepali-number.d.cts",
+        "default": "./dist/nepali-number.cjs"
       },
-      "default": "./dist/index.umd.js"
+      "default": "./dist/nepali-number.umd.js"
     },
     "./package.json": "./package.json"
   },
