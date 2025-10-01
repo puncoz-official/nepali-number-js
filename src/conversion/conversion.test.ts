@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test"
-import { convertMixed, parseNepaliNumber, toEnglish, toNepali } from "."
+import { convert, parseNepaliNumber, toEnglish, toNepali } from "."
 
 describe("Conversion Functions", () => {
   describe("toNepali", () => {
@@ -152,30 +152,30 @@ describe("Conversion Functions", () => {
 
   describe("convertMixed", () => {
     test("converts mixed content to Nepali by default", () => {
-      expect(convertMixed("Call 123-456-7890")).toBe("Call १२३-४५६-७८९०")
-      expect(convertMixed("Price: $12.34")).toBe("Price: $१२.३४")
+      expect(convert("Call 123-456-7890")).toBe("Call १२३-४५६-७८९०")
+      expect(convert("Price: $12.34")).toBe("Price: $१२.३४")
     })
 
     test("converts mixed content to English when specified", () => {
-      expect(convertMixed("फोन १२३-४५६-७८९०", false)).toBe("फोन 123-456-7890")
-      expect(convertMixed("मूल्य: $१२.३४", false)).toBe("मूल्य: $12.34")
+      expect(convert("फोन १२३-४५६-७८९०", false)).toBe("फोन 123-456-7890")
+      expect(convert("मूल्य: $१२.३४", false)).toBe("मूल्य: $12.34")
     })
 
     test("handles empty strings", () => {
-      expect(convertMixed("")).toBe("")
-      expect(convertMixed("", false)).toBe("")
+      expect(convert("")).toBe("")
+      expect(convert("", false)).toBe("")
     })
 
     test("preserves text without numbers", () => {
-      expect(convertMixed("Hello World")).toBe("Hello World")
-      expect(convertMixed("नमस्कार संसार", false)).toBe("नमस्कार संसार")
+      expect(convert("Hello World")).toBe("Hello World")
+      expect(convert("नमस्कार संसार", false)).toBe("नमस्कार संसार")
     })
 
     test("handles complex mixed content", () => {
       const mixed = "Order #123: 45 items @ $67.89 each, total: $3055.05"
       const nepali = "Order #१२३: ४५ items @ $६७.८९ each, total: $३०५५.०५"
-      expect(convertMixed(mixed)).toBe(nepali)
-      expect(convertMixed(nepali, false)).toBe(mixed)
+      expect(convert(mixed)).toBe(nepali)
+      expect(convert(nepali, false)).toBe(mixed)
     })
   })
 })
