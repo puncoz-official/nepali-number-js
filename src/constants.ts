@@ -25,3 +25,9 @@ export const NEPALI_WORDS = [
   "एकासी", "बयासी", "त्रियासी", "चौरासी", "पचासी", "छयासी", "सतासी", "अठासी", "उनान्नब्बे", "नब्बे",
   "एकानब्बे", "बयानब्बे", "त्रियानब्बे", "चौरानब्बे", "पन्चानब्बे", "छयानब्बे", "सन्तानब्बे", "अन्ठानब्बे", "उनान्सय",
 ]
+
+export const ENGLISH_WORDS = {
+  "ONES": ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"],
+  "TEENS": ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"],
+  "TENS": ["twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"],
+}

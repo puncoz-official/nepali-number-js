@@ -1,4 +1,4 @@
-import { NEPALI_SCALES, NEPALI_WORDS } from "@/constants.ts"
+import { ENGLISH_WORDS, NEPALI_SCALES, NEPALI_WORDS } from "@/constants.ts"
 import { parseNepaliNumber } from "@/conversion"
 import { formatNepaliNumber, roundNepali } from "@/formatting"
 
@@ -26,11 +26,48 @@ export const toNepaliWords = (number: number | string): string => {
     }
   }
 
-
   return String(number)
 }
 
 export const toEnglishWords = (number: number | string): string => {
+  const num = parseNepaliNumber(String(number))
+
+  if (num < 0) {
+    return "negative " + toEnglishWords(-num)
+  }
+
+  if (num < 10) {
+    return ENGLISH_WORDS.ONES[num] || ""
+  }
+
+  if (num < 20) {
+    return ENGLISH_WORDS.TEENS[num - 10] || ""
+  }
+
+  if (num < 100) {
+    const tens = Math.floor(num / 10)
+    const ones = num % 10
+
+    let onesWord = ""
+    if (ones !== 0) {
+      onesWord = toEnglishWords(ones)
+    }
+    return `${ENGLISH_WORDS.TENS[tens - 2]} ${onesWord}`.trim()
+  }
+
+  for (let scale of NEPALI_SCALES) {
+    if (num >= scale.value) {
+      const remainder = num % scale.value
+
+      let remainderWord = ""
+      if (remainder > 0) {
+        remainderWord = toEnglishWords(remainder)
+      }
+
+      return `${toEnglishWords(Math.floor(num / scale.value))} ${scale.label_en} ${remainderWord}`.trim()
+    }
+  }
+
   return String(number)
 }
 

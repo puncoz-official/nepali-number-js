@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test"
-import { toDecimalWord, toNepaliWords } from "."
+import { toDecimalWord, toEnglishWords, toNepaliWords } from "."
 
 describe("Words Functions", () => {
   describe("toNepaliWords", () => {
@@ -75,56 +75,56 @@ describe("Words Functions", () => {
     })
   })
 
-  // describe("toEnglishWords", () => {
-  //   test("converts single digits", () => {
-  //     expect(toEnglishWords(0)).toBe("zero")
-  //     expect(toEnglishWords(1)).toBe("one")
-  //     expect(toEnglishWords(5)).toBe("five")
-  //     expect(toEnglishWords(9)).toBe("nine")
-  //   })
-  //
-  //   test("converts teen numbers", () => {
-  //     expect(toEnglishWords(10)).toBe("ten")
-  //     expect(toEnglishWords(11)).toBe("eleven")
-  //     expect(toEnglishWords(15)).toBe("fifteen")
-  //     expect(toEnglishWords(19)).toBe("nineteen")
-  //   })
-  //
-  //   test("converts tens", () => {
-  //     expect(toEnglishWords(20)).toBe("twenty")
-  //     expect(toEnglishWords(21)).toBe("twenty one")
-  //     expect(toEnglishWords(30)).toBe("thirty")
-  //     expect(toEnglishWords(99)).toBe("ninety nine")
-  //   })
-  //
-  //   test("converts hundreds", () => {
-  //     expect(toEnglishWords(100)).toBe("one hundred")
-  //     expect(toEnglishWords(101)).toBe("one hundred one")
-  //     expect(toEnglishWords(250)).toBe("two hundred fifty")
-  //     expect(toEnglishWords(999)).toBe("nine hundred ninety nine")
-  //   })
-  //
-  //   test("converts thousands", () => {
-  //     expect(toEnglishWords(1000)).toBe("one thousand")
-  //     expect(toEnglishWords(1001)).toBe("one thousand one")
-  //     expect(toEnglishWords(2500)).toBe("two thousand five hundred")
-  //   })
-  //
-  //   test("handles negative numbers", () => {
-  //     expect(toEnglishWords(-1)).toBe("negative one")
-  //     expect(toEnglishWords(-123)).toBe("negative one hundred twenty three")
-  //   })
-  //
-  //   test("handles very large numbers fallback", () => {
-  //     expect(toEnglishWords(1234567890)).toBe("1234567890")
-  //   })
-  //
-  //   test("handles edge cases", () => {
-  //     expect(toEnglishWords(11)).toBe("eleven")
-  //     expect(toEnglishWords(12)).toBe("twelve")
-  //     expect(toEnglishWords(13)).toBe("thirteen")
-  //   })
-  // })
+  describe("toEnglishWords", () => {
+    test("converts single digits", () => {
+      expect(toEnglishWords(0)).toBe("zero")
+      expect(toEnglishWords(1)).toBe("one")
+      expect(toEnglishWords(5)).toBe("five")
+      expect(toEnglishWords(9)).toBe("nine")
+    })
+
+    test("converts teen numbers", () => {
+      expect(toEnglishWords(10)).toBe("ten")
+      expect(toEnglishWords(11)).toBe("eleven")
+      expect(toEnglishWords(15)).toBe("fifteen")
+      expect(toEnglishWords(19)).toBe("nineteen")
+    })
+
+    test("converts tens", () => {
+      expect(toEnglishWords(20)).toBe("twenty")
+      expect(toEnglishWords(21)).toBe("twenty one")
+      expect(toEnglishWords(30)).toBe("thirty")
+      expect(toEnglishWords(99)).toBe("ninety nine")
+    })
+
+    test("converts hundreds", () => {
+      expect(toEnglishWords(100)).toBe("one hundred")
+      expect(toEnglishWords(101)).toBe("one hundred one")
+      expect(toEnglishWords(250)).toBe("two hundred fifty")
+      expect(toEnglishWords(999)).toBe("nine hundred ninety nine")
+    })
+
+    test("converts thousands", () => {
+      expect(toEnglishWords(1000)).toBe("one thousand")
+      expect(toEnglishWords(1001)).toBe("one thousand one")
+      expect(toEnglishWords(2500)).toBe("two thousand five hundred")
+    })
+
+    test("handles negative numbers", () => {
+      expect(toEnglishWords(-1)).toBe("negative one")
+      expect(toEnglishWords(-123)).toBe("negative one hundred twenty three")
+    })
+
+    test("handles very large numbers fallback", () => {
+      expect(toEnglishWords(1234567890)).toBe("one arab twenty three crore forty five lakh sixty seven thousand eight hundred ninety")
+    })
+
+    test("handles edge cases", () => {
+      expect(toEnglishWords(11)).toBe("eleven")
+      expect(toEnglishWords(12)).toBe("twelve")
+      expect(toEnglishWords(13)).toBe("thirteen")
+    })
+  })
   //
   // describe("toNepaliOrdinal", () => {
   //   test("formats basic ordinals", () => {
