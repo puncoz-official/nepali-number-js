@@ -1,7 +1,8 @@
-import { toNepaliOrdinal } from "@/words"
+import { toNepaliCurrency } from "@/currency"
 
 export * from "@/conversion"
 export * from "@/formatting"
 export * from "@/words"
+export * from "@/currency"
 
-console.log(toNepaliOrdinal("100"))
+console.log(toNepaliCurrency(100.999, { precision: 1 }))

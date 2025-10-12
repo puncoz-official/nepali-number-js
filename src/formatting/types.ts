@@ -4,5 +4,5 @@ export interface FormatOptions {
   currency?: boolean
   currencySymbol?: string
   precision?: number
-  showZero?: boolean
+  trimZero?: boolean
 }

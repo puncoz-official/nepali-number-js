@@ -1,6 +1,6 @@
 import { NEPALI_DIGITS } from "@/constants.ts"
 import { toEnglish, toNepali } from "@/conversion"
-import type { FormatOptions } from "@/types"
+import type { FormatOptions } from "./types.ts"
 
 /**
  * Format number with Nepali digits and locale-specific formatting
@@ -15,20 +15,22 @@ export const formatNepaliNumber = (number: number | string, options: FormatOptio
     useNepaliDigits = true,
     addCommas = true,
     precision = 2,
-    showZero = true,
+    trimZero = true,
   } = options
 
   const num = typeof number === "string" ? parseFloat(toEnglish(number)) : number
 
   if (isNaN(num) || num === 0) {
-    return showZero ? (useNepaliDigits ? NEPALI_DIGITS[0] ?? "0" : "0") : ""
+    let zeroFormatted = trimZero ? 0 : (0).toFixed(precision)
+
+    return (useNepaliDigits ? toNepali(zeroFormatted) : zeroFormatted).toString()
   }
 
   let formatted = num.toFixed(precision)
 
-  // remove trailing zeros for cleaner display
-  if (precision > 0) {
-    formatted = formatted.replace(/\.?0+$/, "")
+  // remove trailing zeros if there are any decimals for cleaner display
+  if (formatted.includes(".") && trimZero) {
+    formatted = formatted.replace(/\.0+$/, "") // remove .00, .000, etc.
   }
 
   if (addCommas) {

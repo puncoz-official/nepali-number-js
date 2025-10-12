@@ -68,12 +68,12 @@ describe("Formatting Functions", () => {
     test("handles precision option", () => {
       expect(formatNepaliNumber(123.456, { precision: 2 })).toBe("१२३.४६")
       expect(formatNepaliNumber(123.456, { precision: 0 })).toBe("१२३")
-      expect(formatNepaliNumber(123.456, { precision: 4 })).toBe("१२३.४५६")
+      expect(formatNepaliNumber(123.456, { precision: 4 })).toBe("१२३.४५६०")
     })
 
-    test("handles showZero option", () => {
-      expect(formatNepaliNumber(0, { showZero: false })).toBe("")
-      expect(formatNepaliNumber(0, { showZero: true })).toBe("०")
+    test("handles trimZero option", () => {
+      expect(formatNepaliNumber(0, { trimZero: false })).toBe("०.००")
+      expect(formatNepaliNumber(0, { trimZero: true })).toBe("०")
     })
 
     test("handles string input", () => {
@@ -83,14 +83,14 @@ describe("Formatting Functions", () => {
 
     test("handles invalid input", () => {
       expect(formatNepaliNumber("abc")).toBe("०")
-      expect(formatNepaliNumber("abc", { showZero: false })).toBe("")
+      expect(formatNepaliNumber("abc", { trimZero: true })).toBe("०")
       expect(formatNepaliNumber(NaN)).toBe("०")
     })
 
     test("removes trailing zeros", () => {
       expect(formatNepaliNumber(123.00)).toBe("१२३")
-      expect(formatNepaliNumber(123.10)).toBe("१२३.१")
-      expect(formatNepaliNumber(123.50)).toBe("१२३.५")
+      expect(formatNepaliNumber(123.100)).toBe("१२३.१०")
+      expect(formatNepaliNumber(123.50, { precision: 1 })).toBe("१२३.५")
     })
 
     test("handles negative numbers", () => {
