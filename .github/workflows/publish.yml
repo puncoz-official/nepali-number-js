@@ -1,0 +1,237 @@
+name: Publish to NPM
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version_type:
+        description: 'Version type to bump'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+      dry_run:
+        description: 'Dry run (do not publish)'
+        required: false
+        default: false
+        type: boolean
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  version-and-tag:
+    name: Version and Tag
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    outputs:
+      new_version: ${{ steps.version.outputs.new_version }}
+      new_tag: ${{ steps.version.outputs.new_tag }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Configure Git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Bump version
+        id: version
+        run: |
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            echo "🔍 DRY RUN MODE - No changes will be made"
+            CURRENT_VERSION=$(node -p "require('./package.json').version")
+            echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+            echo "new_version=$CURRENT_VERSION-dry-run" >> $GITHUB_OUTPUT
+            echo "new_tag=v$CURRENT_VERSION-dry-run" >> $GITHUB_OUTPUT
+          else
+            npm version ${{ github.event.inputs.version_type }} --no-git-tag-version
+            NEW_VERSION=$(node -p "require('./package.json').version")
+            echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+            echo "new_tag=v$NEW_VERSION" >> $GITHUB_OUTPUT
+            
+            git add package.json
+            git commit -m "chore: bump version to $NEW_VERSION"
+            git tag "v$NEW_VERSION"
+            git push origin main
+            git push origin "v$NEW_VERSION"
+          fi
+
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    needs: [version-and-tag]
+    if: always() && (needs.version-and-tag.result == 'success' || needs.version-and-tag.result == 'skipped')
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && 'main' || github.ref }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Setup Bun
+        uses: actions/setup-node@v5
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Run type check
+        run: bun run type-check
+
+      - name: Run tests
+        run: bun run test
+
+      - name: Run build
+        run: bun run build
+
+  publish:
+    name: Publish to NPM
+    runs-on: ubuntu-latest
+    needs: [version-and-tag, test]
+    if: always() && needs.test.result == 'success' && github.event.inputs.dry_run != 'true'
+    environment: production
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && 'main' || github.ref }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build package
+        run: bun run build
+
+      - name: Verify package contents
+        run: |
+          npm pack --dry-run
+          echo "📦 Package contents:"
+          tar -tzf $(npm pack --silent) | head -20
+
+      - name: Check if version exists on NPM
+        id: check-version
+        run: |
+          PACKAGE_NAME=$(node -p "require('./package.json').name")
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          
+          if npm view "$PACKAGE_NAME@$PACKAGE_VERSION" version 2>/dev/null; then
+            echo "❌ Version $PACKAGE_VERSION already exists on NPM"
+            echo "exists=true" >> $GITHUB_OUTPUT
+            exit 1
+          else
+            echo "✅ Version $PACKAGE_VERSION is new"
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Publish to NPM
+        if: steps.check-version.outputs.exists == 'false'
+        run: |
+          echo "🚀 Publishing to NPM..."
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Release
+        if: steps.check-version.outputs.exists == 'false'
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ needs.version-and-tag.outputs.new_tag || github.ref_name }}
+          release_name: Release ${{ needs.version-and-tag.outputs.new_version || github.ref_name }}
+          body: |
+            ## Changes in this Release
+            
+            ### 🚀 Features
+            - Check the commit history for detailed changes
+            
+            ### 🐛 Bug Fixes
+            - Check the commit history for detailed changes
+            
+            ### 📦 Package Information
+            - **Version**: ${{ needs.version-and-tag.outputs.new_version || github.ref_name }}
+            - **NPM**: https://www.npmjs.com/package/nepali-number
+            - **Size**: Check NPM for bundle size information
+            
+            ### 📝 Installation
+            ```bash
+            npm install nepali-number@${{ needs.version-and-tag.outputs.new_version || github.ref_name }}
+            ```
+            
+            ### 🔗 Links
+            - [NPM Package](https://www.npmjs.com/package/nepali-number)
+            - [Documentation](https://github.com/${{ github.repository }}#readme)
+            - [Changelog](https://github.com/${{ github.repository }}/releases)
+          draft: false
+          prerelease: ${{ contains(needs.version-and-tag.outputs.new_version || github.ref_name, '-') }}
+
+  notify:
+    name: Notify Success
+    runs-on: ubuntu-latest
+    needs: [version-and-tag, test, publish]
+    if: always()
+
+    steps:
+      - name: Notify Success
+        if: needs.publish.result == 'success'
+        run: |
+          echo "🎉 Successfully published nepali-number@${{ needs.version-and-tag.outputs.new_version || github.ref_name }} to NPM!"
+          echo "📦 Package: https://www.npmjs.com/package/nepali-number"
+          echo "🏷️ Release: https://github.com/${{ github.repository }}/releases/tag/${{ needs.version-and-tag.outputs.new_tag || github.ref_name }}"
+
+      - name: Notify Failure
+        if: needs.publish.result == 'failure' || needs.test.result == 'failure'
+        run: |
+          echo "❌ Publication failed!"
+          echo "Please check the logs and try again."
+          exit 1
+
+      - name: Notify Dry Run
+        if: github.event.inputs.dry_run == 'true'
+        run: |
+          echo "🔍 DRY RUN COMPLETED"
+          echo "✅ Tests passed"
+          echo "✅ Build successful"
+          echo "ℹ️ No changes were made (dry run mode)"
