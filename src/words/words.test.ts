@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test"
-import { toDecimalWord, toEnglishWords, toNepaliWords } from "."
+import { toDecimalWord, toEnglishWords, toNepaliOrdinal, toNepaliWords } from "."
 
 describe("Words Functions", () => {
   describe("toNepaliWords", () => {
@@ -125,34 +125,34 @@ describe("Words Functions", () => {
       expect(toEnglishWords(13)).toBe("thirteen")
     })
   })
-  //
-  // describe("toNepaliOrdinal", () => {
-  //   test("formats basic ordinals", () => {
-  //     expect(toNepaliOrdinal(1)).toBe("पहिलो")
-  //     expect(toNepaliOrdinal(2)).toBe("दोस्रो")
-  //     expect(toNepaliOrdinal(3)).toBe("तेस्रो")
-  //     expect(toNepaliOrdinal(4)).toBe("चौथो")
-  //     expect(toNepaliOrdinal(5)).toBe("पाँचौं")
-  //     expect(toNepaliOrdinal(10)).toBe("दशौं")
-  //   })
-  //
-  //   test("formats larger ordinals", () => {
-  //     expect(toNepaliOrdinal(11)).toBe("एघारौं")
-  //     expect(toNepaliOrdinal(21)).toBe("बीस एकौं")
-  //     expect(toNepaliOrdinal(100)).toBe("एक सयौं")
-  //   })
-  //
-  //   test("handles edge cases", () => {
-  //     expect(toNepaliOrdinal(0)).toBe("शून्यौं")
-  //     expect(toNepaliOrdinal(25)).toBe("बीस पाँचौं")
-  //     expect(toNepaliOrdinal(101)).toBe("एक सय एकौं")
-  //   })
-  //
-  //   test("handles negative numbers", () => {
-  //     expect(toNepaliOrdinal(-1)).toBe("ऋण एकौं")
-  //     expect(toNepaliOrdinal(-5)).toBe("ऋण पाँचौं")
-  //   })
-  // })
+
+  describe("toNepaliOrdinal", () => {
+    test("formats basic ordinals", () => {
+      expect(toNepaliOrdinal(1)).toBe("पहिलो")
+      expect(toNepaliOrdinal(2)).toBe("दोस्रो")
+      expect(toNepaliOrdinal(3)).toBe("तेस्रो")
+      expect(toNepaliOrdinal(4)).toBe("चौथो")
+      expect(toNepaliOrdinal(5)).toBe("पाँचौं")
+      expect(toNepaliOrdinal(10)).toBe("दशौं")
+    })
+
+    test("formats larger ordinals", () => {
+      expect(toNepaliOrdinal(11)).toBe("एघारौं")
+      expect(toNepaliOrdinal(21)).toBe("एक्काईसौं")
+      expect(toNepaliOrdinal(100)).toBe("एक सयौं")
+    })
+
+    test("handles edge cases", () => {
+      expect(toNepaliOrdinal(0)).toBe("शून्यौं")
+      expect(toNepaliOrdinal(25)).toBe("पच्चीसौं")
+      expect(toNepaliOrdinal(101)).toBe("एक सय एकौं")
+    })
+
+    test("handles negative numbers", () => {
+      expect(toNepaliOrdinal(-1)).toBe("ऋण एकौं")
+      expect(toNepaliOrdinal(-5)).toBe("ऋण पाँचौं")
+    })
+  })
 
   describe("toDecimalWord", () => {
     test("converts to decimal words", () => {

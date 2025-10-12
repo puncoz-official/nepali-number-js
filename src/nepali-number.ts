@@ -1,7 +1,7 @@
-import { toEnglishWords } from "@/words"
+import { toNepaliOrdinal } from "@/words"
 
 export * from "@/conversion"
 export * from "@/formatting"
 export * from "@/words"
 
-console.log(toEnglishWords("1234567890"))
+console.log(toNepaliOrdinal("100"))
