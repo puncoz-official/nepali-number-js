@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test"
-import { toNepaliCurrency } from "."
+import { toNepaliCurrency, toNepaliCurrencyWords } from "."
 
 describe("Currency Functions", () => {
   describe("toNepaliCurrency", () => {
@@ -76,51 +76,51 @@ describe("Currency Functions", () => {
       expect(toNepaliCurrency(100.50, {precision: 1})).toBe("रू १००.५")
     })
   })
-  //
-  // describe("convertCurrencyWords", () => {
-  //   test("converts basic amounts to words", () => {
-  //     expect(convertCurrencyWords(1)).toBe("एक रुपैयाँ")
-  //     expect(convertCurrencyWords(5)).toBe("पाँच रुपैयाँ")
-  //     expect(convertCurrencyWords(100)).toBe("एक सय रुपैयाँ")
-  //   })
-  //
-  //   test("handles paisa correctly", () => {
-  //     expect(convertCurrencyWords(0.50)).toBe("पचास पैसा")
-  //     expect(convertCurrencyWords(0.25)).toBe("बीस पाँच पैसा")
-  //     expect(convertCurrencyWords(0.01)).toBe("एक पैसा")
-  //   })
-  //
-  //   test("handles rupees and paisa together", () => {
-  //     expect(convertCurrencyWords(1.50)).toBe("एक रुपैयाँ पचास पैसा")
-  //     expect(convertCurrencyWords(125.75)).toBe("एक सय बीस पाँच रुपैयाँ पचहत्तर पैसा")
-  //     expect(convertCurrencyWords(5.05)).toBe("पाँच रुपैयाँ पाँच पैसा")
-  //   })
-  //
-  //   test("handles zero amount", () => {
-  //     expect(convertCurrencyWords(0)).toBe("शून्य रुपैयाँ")
-  //     expect(convertCurrencyWords(0.00)).toBe("शून्य रुपैयाँ")
-  //   })
-  //
-  //   test("handles large amounts", () => {
-  //     expect(convertCurrencyWords(1000)).toBe("एक हजार रुपैयाँ")
-  //     expect(convertCurrencyWords(100000)).toBe("एक लाख रुपैयाँ")
-  //     expect(convertCurrencyWords(10000000)).toBe("एक करोड रुपैयाँ")
-  //   })
-  //
-  //   test("handles decimal precision edge cases", () => {
-  //     expect(convertCurrencyWords(1.999)).toBe("दुई रुपैयाँ")
-  //     expect(convertCurrencyWords(1.001)).toBe("एक रुपैयाँ")
-  //     expect(convertCurrencyWords(1.995)).toBe("दुई रुपैयाँ")
-  //   })
-  //
-  //   test("handles negative amounts", () => {
-  //     expect(convertCurrencyWords(-100)).toBe("ऋण एक सय रुपैयाँ")
-  //     expect(convertCurrencyWords(-1.50)).toBe("ऋण एक रुपैयाँ पचास पैसा")
-  //   })
-  //
-  //   test("handles fractional paisa correctly", () => {
-  //     expect(convertCurrencyWords(1.234)).toBe("एक रुपैयाँ तेइस पैसा")
-  //     expect(convertCurrencyWords(1.678)).toBe("एक रुपैयाँ अठसठी पैसा")
-  //   })
-  // })
+
+  describe("toNepaliCurrencyWords", () => {
+    test("converts basic amounts to words", () => {
+      expect(toNepaliCurrencyWords(1)).toBe("एक रुपैयाँ")
+      expect(toNepaliCurrencyWords(5)).toBe("पाँच रुपैयाँ")
+      expect(toNepaliCurrencyWords(100)).toBe("एक सय रुपैयाँ")
+    })
+
+    test("handles paisa correctly", () => {
+      expect(toNepaliCurrencyWords(0.50)).toBe("पचास पैसा")
+      expect(toNepaliCurrencyWords(0.25)).toBe("पच्चीस पैसा")
+      expect(toNepaliCurrencyWords(0.01)).toBe("एक पैसा")
+    })
+
+    test("handles rupees and paisa together", () => {
+      expect(toNepaliCurrencyWords(1.50)).toBe("एक रुपैयाँ पचास पैसा")
+      expect(toNepaliCurrencyWords(125.75)).toBe("एक सय पच्चीस रुपैयाँ पचहत्तर पैसा")
+      expect(toNepaliCurrencyWords(5.05)).toBe("पाँच रुपैयाँ पाँच पैसा")
+    })
+
+    test("handles zero amount", () => {
+      expect(toNepaliCurrencyWords(0)).toBe("शून्य रुपैयाँ")
+      expect(toNepaliCurrencyWords(0.00)).toBe("शून्य रुपैयाँ")
+    })
+
+    test("handles large amounts", () => {
+      expect(toNepaliCurrencyWords(1000)).toBe("एक हजार रुपैयाँ")
+      expect(toNepaliCurrencyWords(100000)).toBe("एक लाख रुपैयाँ")
+      expect(toNepaliCurrencyWords(10000000)).toBe("एक करोड रुपैयाँ")
+    })
+
+    test("handles decimal precision edge cases", () => {
+      expect(toNepaliCurrencyWords(1.999)).toBe("दुई रुपैयाँ")
+      expect(toNepaliCurrencyWords(1.001)).toBe("एक रुपैयाँ")
+      expect(toNepaliCurrencyWords(1.995)).toBe("दुई रुपैयाँ")
+    })
+
+    test("handles negative amounts", () => {
+      expect(toNepaliCurrencyWords(-100)).toBe("ऋण एक सय रुपैयाँ")
+      expect(toNepaliCurrencyWords(-1.50)).toBe("ऋण एक रुपैयाँ पचास पैसा")
+    })
+
+    test("handles fractional paisa correctly", () => {
+      expect(toNepaliCurrencyWords(1.234)).toBe("एक रुपैयाँ तेईस पैसा")
+      expect(toNepaliCurrencyWords(1.678)).toBe("एक रुपैयाँ अठसट्ठी पैसा")
+    })
+  })
 })
