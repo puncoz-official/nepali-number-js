@@ -1,6 +1,7 @@
-import { ENGLISH_WORDS, NEPALI_ORDINALS, NEPALI_ORDINALS_EXCEPTIONS, NEPALI_SCALES, NEPALI_WORDS } from "@/constants.ts"
+import { ENGLISH_WORDS, NEPALI_ORDINALS, NEPALI_ORDINALS_EXCEPTIONS, NEPALI_SCALES, NEPALI_WORDS } from "@/constants"
 import { parseNepaliNumber } from "@/conversion"
-import { formatNepaliNumber, roundNepali } from "@/formatting"
+import { formatNepaliNumber } from "@/formatting"
+import { roundNepali } from "@/utils"
 
 export const toNepaliWords = (number: number | string): string => {
   const num = parseNepaliNumber(String(number))
