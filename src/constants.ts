@@ -1,6 +1,11 @@
 export const NEPALI_DIGITS = "०१२३४५६७८९"
 
-export const NEPALI_SCALES = [
+export const NEPALI_SCALES: {
+  value: number
+  label_np: string
+  label_en: string
+  label_ordinal: string
+}[] = [
   { value: 1e19, label_np: "महाशंख", label_en: "maha-shankh", label_ordinal: "महाशंखौं" },
   { value: 1e17, label_np: "शंख", label_en: "shankh", label_ordinal: "शंखौं" },
   { value: 1e15, label_np: "पद्म", label_en: "padma", label_ordinal: "पदमौं" },
@@ -13,7 +18,7 @@ export const NEPALI_SCALES = [
   { value: 1e2, label_np: "सय", label_en: "hundred", label_ordinal: "सयौं" },
 ]
 
-export const NEPALI_WORDS = [
+export const NEPALI_WORDS: string[] = [
   "शून्य",
   "एक", "दुई", "तीन", "चार", "पाँच", "छ", "सात", "आठ", "नौ", "दश",
   "एघार", "बाह्र", "तेह्र", "चौध", "पन्ध्र", "सोह्र", "सत्र", "अठार", "उन्नाइस", "बीस",
@@ -27,8 +32,8 @@ export const NEPALI_WORDS = [
   "एकानब्बे", "बयानब्बे", "त्रियानब्बे", "चौरानब्बे", "पन्चानब्बे", "छयानब्बे", "सन्तानब्बे", "अन्ठानब्बे", "उनान्सय",
 ]
 
-export const NEPALI_ORDINALS_EXCEPTIONS = ["शून्यौं", "पहिलो", "दोस्रो", "तेस्रो", "चौथो"]
-export const NEPALI_ORDINALS = [
+export const NEPALI_ORDINALS_EXCEPTIONS: string[] = ["शून्यौं", "पहिलो", "दोस्रो", "तेस्रो", "चौथो"]
+export const NEPALI_ORDINALS: string[] = [
   "शून्य",
   "एकौं", "दुइऔं", "तीनौं", "चारौं", "पाँचौं", "छैटौं", "सातौं", "आठौं", "नवौं", "दशौं",
   "एघारौं", "बाह्रौं", "तेह्रौं", "चौधौं", "पन्ध्रौं", "सोह्रौं", "सत्रौं", "अठारौं", "उन्नाईसौं", "बीसौं",
@@ -42,7 +47,11 @@ export const NEPALI_ORDINALS = [
   "एकानब्बेऔं", "बयानब्बेऔं", "त्रियानब्बेऔं", "चौरानब्बेऔं", "पन्चानब्बेऔं", "छयानब्बेऔं", "सन्तानब्बेऔं", "अन्ठानब्बेऔं", "उनान्सयौं",
 ]
 
-export const ENGLISH_WORDS = {
+export const ENGLISH_WORDS: {
+  ONES: string[]
+  TEENS: string[]
+  TENS: string[]
+} = {
   "ONES": ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"],
   "TEENS": ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"],
   "TENS": ["twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"],

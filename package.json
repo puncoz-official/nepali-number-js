@@ -1,6 +1,6 @@
 {
   "name": "nepali-number",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "Convert, transliterate, and format numbers between English and Nepali (Devanagari) with full Unicode support. Includes translation utilities for working with localized number systems.",
   "keywords": ["nepali", "devanagari", "hindi", "numbers", "digits", "conversion", "transliteration", "translation", "formatting", "unicode", "localization", "i18n", "l10n", "bilingual", "english-numbers", "nepali-numbers", "hindi-numbers"],
   "license": "MIT",
@@ -20,7 +20,8 @@
   "scripts": {
     "build": "tsdown --clean --dts",
     "dev": "tsdown --watch",
-    "test": "bun test"
+    "test": "bun test",
+    "type-check": "tsc --noEmit"
   },
   "type": "module",
   "main": "./dist/nepali-number.cjs",

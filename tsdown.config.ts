@@ -1,6 +1,6 @@
-import { defineConfig } from "tsdown"
+import { defineConfig, type UserConfig } from "tsdown"
 
-export default defineConfig({
+const tsDownConfig: UserConfig = defineConfig({
   entry: ["./src/nepali-number.ts"],
   outDir: "./dist",
   platform: "node",
@@ -15,3 +15,5 @@ export default defineConfig({
   minify: true,
   clean: true,
 })
+
+export default tsDownConfig
