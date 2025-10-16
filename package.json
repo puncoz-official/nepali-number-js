@@ -1,8 +1,26 @@
 {
   "name": "nepali-number",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Convert, transliterate, and format numbers between English and Nepali (Devanagari) with full Unicode support. Includes translation utilities for working with localized number systems.",
-  "keywords": ["nepali", "devanagari", "hindi", "numbers", "digits", "conversion", "transliteration", "translation", "formatting", "unicode", "localization", "i18n", "l10n", "bilingual", "english-numbers", "nepali-numbers", "hindi-numbers"],
+  "keywords": [
+    "nepali",
+    "devanagari",
+    "hindi",
+    "numbers",
+    "digits",
+    "conversion",
+    "transliteration",
+    "translation",
+    "formatting",
+    "unicode",
+    "localization",
+    "i18n",
+    "l10n",
+    "bilingual",
+    "english-numbers",
+    "nepali-numbers",
+    "hindi-numbers"
+  ],
   "license": "MIT",
   "homepage": "https://github.com/puncoz-official/nepali-number-js",
   "author": {
