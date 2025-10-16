@@ -1,65 +1,55 @@
 {
   "name": "nepali-number",
-  "version": "1.0.3",
-  "description": "Conversion and transliteration of English to Nepali numbers and vice versa",
-  "main": "dist/index.js",
-  "module": "dist/index.es.js",
-  "jsnext:main": "dist/index.es.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "test": "NODE_ICU_DATA=node_modules/full-icu jest --config jestconfig.json",
-    "clean-modules": "rimraf node_modules",
-    "clean": "rimraf dist npm-debug.log* yarn-error.log*",
-    "build:example": "cd ./examples && yarn && yarn build",
-    "watch:example": "yarn --cwd ./examples start",
-    "build:plugin": "yarn clean && rollup -c",
-    "watch:plugin": "rollup -c --watch",
-    "build": "npm-run-all build:*",
-    "start": "npm-run-all -p watch:*",
-    "format": "prettier --write \"src/**/*.ts\"",
-    "lint": "tslint -p tsconfig.json",
-    "prepare": "yarn build",
-    "prepublishOnly": "yarn test && yarn lint",
-    "preversion": "yarn lint",
-    "version": "yarn format && git add -A src",
-    "postversion": "git push && git push --tags"
+  "version": "2.0.0",
+  "description": "Convert, transliterate, and format numbers between English and Nepali (Devanagari) with full Unicode support. Includes translation utilities for working with localized number systems.",
+  "keywords": ["nepali", "devanagari", "hindi", "numbers", "digits", "conversion", "transliteration", "translation", "formatting", "unicode", "localization", "i18n", "l10n", "bilingual", "english-numbers", "nepali-numbers", "hindi-numbers"],
+  "license": "MIT",
+  "homepage": "https://github.com/puncoz-official/nepali-number-js",
+  "author": {
+    "name": "Puncoz Nepal",
+    "email": "info@puncoz.com",
+    "url": "https://puncoz.com"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:puncoz-official/nepali-number-js.git"
+    "url": "git+https://github.com/puncoz-official/nepali-number-js.git"
   },
-  "keywords": [
-    "nepali",
-    "english",
-    "number",
-    "digit",
-    "conversion"
-  ],
-  "author": "Puncoz Nepal <info@puncoz.com>",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/puncoz-official/nepali-number-js/issues"
   },
-  "homepage": "https://github.com/puncoz-official/nepali-number-js",
-  "devDependencies": {
-    "@types/jest": "^24.0.17",
-    "full-icu": "^1.3.0",
-    "jest": "^24.9.0",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^1.18.2",
-    "rimraf": "^3.0.0",
-    "rollup": "^1.19.4",
-    "rollup-plugin-commonjs": "^10.0.2",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-peer-deps-external": "^2.2.0",
-    "rollup-plugin-typescript2": "^0.22.1",
-    "ts-jest": "^24.0.2",
-    "tslint": "^5.18.0",
-    "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.5.3"
+  "scripts": {
+    "build": "tsdown --clean --dts",
+    "dev": "tsdown --watch",
+    "test": "bun test",
+    "type-check": "tsc --noEmit"
+  },
+  "type": "module",
+  "main": "./dist/nepali-number.cjs",
+  "module": "./dist/nepali-number.js",
+  "browser": "./dist/nepali-number.umd.js",
+  "unpkg": "./dist/nepali-number.iife.js",
+  "types": "./dist/nepali-number.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/nepali-number.d.ts",
+        "default": "./dist/nepali-number.js"
+      },
+      "require": {
+        "types": "./dist/nepali-number.d.cts",
+        "default": "./dist/nepali-number.cjs"
+      },
+      "default": "./dist/nepali-number.umd.js"
+    },
+    "./package.json": "./package.json"
   },
   "files": [
-    "dist/**/*"
+    "dist"
   ],
-  "dependencies": {}
+  "devDependencies": {
+    "@types/bun": "latest",
+    "tsdown": "^0.15.2",
+    "typescript": "^5"
+  },
+  "peerDependencies": {}
 }
